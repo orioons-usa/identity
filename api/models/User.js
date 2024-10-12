@@ -13,14 +13,17 @@ const UserSchema = new mongoose.Schema({
     image: { type: String },
     name: { type: String },
     email: { type: String },
+    emails: [{ type: String }],
+    phones: [{ type: String }],
     company: { type: String },
     id:{ type: String },
     bio: String,
-    social: [{ type: String }],
+    socials: [{ type: String }],
     experience: [{ company: String, role: String, duration: String }],
     education: [{ institution: String, degree: String, year: String }],
     customFields: [{ fieldName: String, value: String }],
   },
+  integ: [{ appName: String, appID: String}]
 });
 
 module.exports = mongoose.model("User", UserSchema);
