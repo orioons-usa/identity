@@ -5,13 +5,14 @@ const stripe = require("../config/stripe");
 
 // User Registration
 exports.registerUser = async (req, res) => {
-  const { name, email, password, id, profile} = req.body;
+  let { name, email, password, id, profile} = req.body;
   try {
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ msg: "User already exists" });
     }
-
+      profile.name = name
+      profile.email = email
     user = new User({ name, email, password, id, profile });
 
     // Hash Password
