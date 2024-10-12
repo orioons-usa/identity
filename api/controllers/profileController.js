@@ -23,7 +23,6 @@ exports.getProfile = async (req, res) => {
   try {
     const user = await User.findOne({id: req.params.id});
     if (!user) return res.status(404).json({ msg: "Profile not found" });
-
     res.json(user.profile);
   } catch (err) {
     console.error(err.message);
