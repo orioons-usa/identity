@@ -10,16 +10,15 @@ const UserSchema = new mongoose.Schema({
   recentPaymentLink: { type: String},
   recentSessionID: { type: String},
   profile: {
+    image: { type: String },
     name: { type: String },
     email: { type: String },
     company: { type: String },
     id:{ type: String },
     bio: String,
-    skills: [String],
+    social: [{ type: String }],
     experience: [{ company: String, role: String, duration: String }],
     education: [{ institution: String, degree: String, year: String }],
-    projects: [{ name: String, description: String }],
-    awards: [{ title: String, year: String }],
     customFields: [{ fieldName: String, value: String }],
   },
 });
