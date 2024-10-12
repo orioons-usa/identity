@@ -32,7 +32,7 @@ exports.getProfile = async (req, res) => {
 };
 exports.getProfileExtire = async (req, res) => {
   try {
-    const user = await User.findOne({email: req.user.email});
+    const user = await User.findOne({id: req.user.id});
     if (!user) return res.status(404).json({ msg: "Profile not found" });
 
     res.json(user);
