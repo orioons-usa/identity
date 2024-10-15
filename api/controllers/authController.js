@@ -11,8 +11,7 @@ exports.registerUser = async (req, res) => {
     if (user) {
       return res.status(400).json({ msg: "User already exists" });
     }
-      profile.name = name
-      profile.email = email
+    
     user = new User({ name, email, password, id, profile });
 
     // Hash Password
@@ -126,6 +125,9 @@ exports.checkPayment = async (sessionId) => {
   
         return true; // Payment successful
       } else {
+        let user = await User.findOne({ recentSessionID: sessionId });
+        user.subscriptionStatus = "inactive";
+        await user.save();
         return false; // Payment not successful
       }
     } catch (err) {
@@ -155,9 +157,10 @@ exports.checkPayment = async (sessionId) => {
         await user.save();
   
         // Respond with a success message
-        res.status(200).json({ msg: "Subscription activated successfully!" });
+        res.status(200).json({ msg: "Subscription activated!" });
       } else {
-        res.status(400).json({ msg: "Payment not completed" });
+        let user = await User.findOne({ email });
+        res.status(400).json({ msg: "Payment not completed", link: user.recentPaymentLink });
       }
     } catch (err) {
       console.error(err);
