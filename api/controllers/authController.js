@@ -139,15 +139,15 @@ exports.checkPayment = async (sessionId) => {
 
   exports.paymentSuccess = async (req, res) => {
     const { email } = req.params;
-    const { session_id } = req.query;
   
     try {
       // Check the payment status using the session ID
-      const paymentSuccessful = await exports.checkPayment(session_id);
+      let user = await User.findOne({ email });
+      const paymentSuccessful = await exports.checkPayment(user.recentSessionID);
   
       if (paymentSuccessful) {
         // Find the user by email and set subscriptionStatus to active
-        let user = await User.findOne({ email });
+        
         if (!user) {
           return res.status(404).json({ msg: "User not found" });
         }
@@ -159,7 +159,6 @@ exports.checkPayment = async (sessionId) => {
         // Respond with a success message
         res.status(200).json({ msg: "Subscription activated!" });
       } else {
-        let user = await User.findOne({ email });
         res.status(400).json({ msg: "Payment not completed", link: user.recentPaymentLink });
       }
     } catch (err) {
