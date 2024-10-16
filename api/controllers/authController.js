@@ -159,7 +159,7 @@ exports.checkPayment = async (sessionId) => {
         // Respond with a success message
         res.status(200).json({ msg: "Subscription activated!" });
       } else {
-        res.status(400).json({ msg: "Payment not completed", link: user.recentPaymentLink });
+        res.status(200).json({ msg: "Payment not completed", link: user.recentPaymentLink });
       }
     } catch (err) {
       console.error(err);

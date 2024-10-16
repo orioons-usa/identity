@@ -11,3 +11,4 @@ router.post("/subscribe", auth, subscribeUser);
 router.post("/payment/success/:email", paymentSuccess);
 
 module.exports = router;
+    
